@@ -1,0 +1,32 @@
+messages:
+  reload: '&a&lSUKSES &8| &fConfig ArsyaCustomRTP berhasil direload.'
+  disabled: '&c&lERROR &8| &fRTP ini sedang dinonaktifkan.'
+  no-permission: '&c&lERROR &8| &fKamu tidak punya permission.'
+  command-failed: '&c&lERROR &8| &fGagal menjalankan command RTP.'
+  not-enough-balance: '&c&lERROR &8| &fSaldo minimal untuk RTP ini adalah &a$%minimum_balance%&f.'
+  success: '&a&lSUKSES &8| &fSaldo dipotong &a$%cost% &funtuk RTP &e(%world%)&f.'
+
+worlds:
+  overworld:
+    enabled: true
+    permission: ''
+    percent: 10
+    minimum-balance: 1000
+    max-cost: 50000
+    rtp-command: 'rtp world world_resources'
+
+  nether:
+    enabled: true
+    permission: ''
+    percent: 10
+    minimum-balance: 1000
+    max-cost: 50000
+    rtp-command: 'rtp world world_nether_resources'
+
+  end:
+    enabled: true
+    permission: ''
+    percent: 10
+    minimum-balance: 1000
+    max-cost: 50000
+    rtp-command: 'rtp world world_the_end_resources'

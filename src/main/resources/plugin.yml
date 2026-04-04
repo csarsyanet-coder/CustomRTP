@@ -1,0 +1,17 @@
+name: ArsyaCustomRTP
+version: 1.0.0
+main: me.arsyadev.customrtp.CustomRTPPlugin
+api-version: '1.20'
+author: ArsyaDev
+depend: [Vault]
+commands:
+  customrtp:
+    description: RTP resource dengan biaya persen
+    usage: /customrtp <overworld|nether|end>
+permissions:
+  customrtp.admin:
+    description: Reload plugin CustomRTP
+    default: op
+  customrtp.bypasscost:
+    description: Bypass biaya RTP
+    default: op
