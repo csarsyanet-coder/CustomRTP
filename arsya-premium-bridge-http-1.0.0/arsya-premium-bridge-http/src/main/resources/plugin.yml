@@ -1,0 +1,11 @@
+name: ArsyaPremiumBridgeHttp
+version: 1.0.0
+main: dev.arsyadev.apcbridgehttp.ArsyaPremiumBridgeHttpPlugin
+api-version: '1.21'
+author: ArsyaDev
+softdepend: [PlaceholderAPI]
+
+commands:
+  c:
+    description: Arsya Premium Coin commands
+    usage: /c saldo | /c cektopup | /c refresh

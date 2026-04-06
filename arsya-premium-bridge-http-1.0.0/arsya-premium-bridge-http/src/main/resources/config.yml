@@ -1,0 +1,7 @@
+proxy-api:
+  base-url: "http://127.0.0.1:37841"
+  token: "ganti-token-internal-ini"
+  timeout-ms: 5000
+
+messages:
+  currency-name: "Arsya Premium Coin"
