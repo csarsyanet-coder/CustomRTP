@@ -18,7 +18,7 @@ jobs:
           cache: maven
 
       - name: Build proxy plugin
-        working-directory: arsya-premium-bridge-http-1.0.0
+        working-directory: proxycoins-http-core-1.0.0
         run: mvn clean package
 
       - name: Upload proxy jar
@@ -40,7 +40,7 @@ jobs:
           cache: maven
 
       - name: Build server plugin
-        working-directory: proxycoins-http-core-1.0.0
+        working-directory: arsya-premium-bridge-http-1.0.0
         run: mvn clean package
 
       - name: Upload server jar
