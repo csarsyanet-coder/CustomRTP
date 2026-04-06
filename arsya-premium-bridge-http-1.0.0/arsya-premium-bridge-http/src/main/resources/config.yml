@@ -1,6 +1,6 @@
 proxy-api:
-  base-url: "http://127.0.0.1:37841"
-  token: "ganti-token-internal-ini"
+  base-url: "http://127.0.0.1:18080"
+  token: "mbud"
   timeout-ms: 5000
 
 messages:
