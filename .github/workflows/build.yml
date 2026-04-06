@@ -1,17 +1,14 @@
-name: Build Plugin
+name: Build Plugins
 
 on:
   push:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
-  build:
+  build-proxy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Java 21
         uses: actions/setup-java@v4
@@ -20,11 +17,34 @@ jobs:
           java-version: '21'
           cache: maven
 
-      - name: Build with Maven
+      - name: Build proxy plugin
+        working-directory: proxycoins-http-core-1.0.0
         run: mvn clean package
 
-      - name: Upload jar
+      - name: Upload proxy jar
         uses: actions/upload-artifact@v4
         with:
-          name: CustomRTP-JAR
-          path: target/*.jar
+          name: ProxyCoinsHttpCore
+          path: proxycoins-http-core-1.0.0/target/*.jar
+
+  build-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Build server plugin
+        working-directory: arsya-premium-bridge-http-1.0.0
+        run: mvn clean package
+
+      - name: Upload server jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: ArsyaPremiumBridgeHttp
+          path: arsya-premium-bridge-http-1.0.0/target/*.jar
