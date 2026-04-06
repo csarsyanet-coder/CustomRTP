@@ -17,19 +17,24 @@ public final class ProxyDatabase {
         this.logger = logger;
     }
 
-    public synchronized void initialize() {
-        try {
-            String jdbcUrl = "jdbc:sqlite:" + databasePath.toAbsolutePath();
-            this.connection = DriverManager.getConnection(jdbcUrl);
-            try (Statement statement = connection.createStatement()) {
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS players (uuid TEXT PRIMARY KEY, last_name TEXT NOT NULL, first_seen INTEGER NOT NULL, last_seen INTEGER NOT NULL, balance INTEGER NOT NULL DEFAULT 0)");
-                statement.executeUpdate("CREATE TABLE IF NOT EXISTS processed_transactions (trx_id TEXT PRIMARY KEY, processed_at INTEGER NOT NULL)");
-                statement.executeUpdate("PRAGMA journal_mode=WAL");
-            }
-        } catch (SQLException exception) {
-            throw new IllegalStateException("Gagal inisialisasi SQLite", exception);
+   public synchronized void initialize() {
+    try {
+        Class.forName("org.sqlite.JDBC");
+
+        String jdbcUrl = "jdbc:sqlite:" + databasePath.toAbsolutePath();
+        this.connection = DriverManager.getConnection(jdbcUrl);
+
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS players (uuid TEXT PRIMARY KEY, last_name TEXT NOT NULL, first_seen INTEGER NOT NULL, last_seen INTEGER NOT NULL, balance INTEGER NOT NULL DEFAULT 0)");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS processed_transactions (trx_id TEXT PRIMARY KEY, processed_at INTEGER NOT NULL)");
+            statement.executeUpdate("PRAGMA journal_mode=WAL");
         }
+    } catch (ClassNotFoundException exception) {
+        throw new IllegalStateException("Driver SQLite tidak ditemukan", exception);
+    } catch (SQLException exception) {
+        throw new IllegalStateException("Gagal inisialisasi SQLite", exception);
     }
+}
 
     public synchronized void upsertPlayer(String uuid, String username) {
         long now = Instant.now().getEpochSecond();
