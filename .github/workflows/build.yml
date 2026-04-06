@@ -18,14 +18,14 @@ jobs:
           cache: maven
 
       - name: Build proxy plugin
-        working-directory: proxycoins-http-core-1.0.0
+        working-directory: proxycoins-http-core-1.0.0/proxycoins-http-core
         run: mvn clean package
 
       - name: Upload proxy jar
         uses: actions/upload-artifact@v4
         with:
           name: ProxyCoinsHttpCore
-          path: proxycoins-http-core-1.0.0/target/*.jar
+          path: proxycoins-http-core-1.0.0/proxycoins-http-core/target/*.jar
 
   build-server:
     runs-on: ubuntu-latest
@@ -40,11 +40,11 @@ jobs:
           cache: maven
 
       - name: Build server plugin
-        working-directory: arsya-premium-bridge-http-1.0.0
+        working-directory: arsya-premium-bridge-http-1.0.0/arsya-premium-bridge-http
         run: mvn clean package
 
       - name: Upload server jar
         uses: actions/upload-artifact@v4
         with:
           name: ArsyaPremiumBridgeHttp
-          path: arsya-premium-bridge-http-1.0.0/target/*.jar
+          path: arsya-premium-bridge-http-1.0.0/arsya-premium-bridge-http/target/*.jar
