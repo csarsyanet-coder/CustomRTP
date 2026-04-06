@@ -485,4 +485,4 @@ public final class ArsyaPremiumBridgeHttpPlugin extends JavaPlugin implements Li
 
     private record ApiResult(boolean ok, long balance, long added, String error) {
     }
-}}
+}
