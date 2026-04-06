@@ -4,23 +4,45 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
-public final class APCPlaceholderExpansion extends PlaceholderExpansion {
-    private final ArsyaPremiumBridgeHttpPlugin plugin;
-    private final BalanceCache cache;
+public final class ApcPlaceholderExpansion extends PlaceholderExpansion {
 
-    public APCPlaceholderExpansion(ArsyaPremiumBridgeHttpPlugin plugin, BalanceCache cache) {
-        this.plugin = plugin; this.cache = cache;
+    private final ArsyaPremiumBridgeHttpPlugin plugin;
+
+    public ApcPlaceholderExpansion(ArsyaPremiumBridgeHttpPlugin plugin) {
+        this.plugin = plugin;
     }
 
-    @Override public @NotNull String getIdentifier() { return "apc"; }
-    @Override public @NotNull String getAuthor() { return "ArsyaDev"; }
-    @Override public @NotNull String getVersion() { return plugin.getDescription().getVersion(); }
-    @Override public boolean persist() { return true; }
+    @Override
+    public @NotNull String getIdentifier() {
+        return "apc";
+    }
+
+    @Override
+    public @NotNull String getAuthor() {
+        return "ArsyaDev";
+    }
+
+    @Override
+    public @NotNull String getVersion() {
+        return plugin.getDescription().getVersion();
+    }
+
+    @Override
+    public boolean persist() {
+        return true;
+    }
 
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String params) {
-        long value = cache.get(player.getUniqueId());
-        if (params.equalsIgnoreCase("balance") || params.equalsIgnoreCase("saldo")) return String.valueOf(value);
+        if (player == null || player.getUniqueId() == null) {
+            return "0";
+        }
+
+        String key = params.toLowerCase();
+        if (key.equals("balance") || key.equals("saldo")) {
+            return String.valueOf(plugin.getCachedBalance(player.getUniqueId()));
+        }
+
         return null;
     }
 }
