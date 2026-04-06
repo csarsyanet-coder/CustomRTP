@@ -8,4 +8,41 @@ softdepend: [PlaceholderAPI]
 commands:
   c:
     description: Arsya Premium Coin commands
-    usage: /c saldo | /c cektopup | /c refresh
+    usage: /c saldo | /c cektopup | /c refresh | /c addcoin | /c takecoin | /c setcoin | /c check
+
+permissions:
+  arsyacoin.command.saldo:
+    description: Pakai /c saldo
+    default: true
+
+  arsyacoin.command.cektopup:
+    description: Pakai /c cektopup
+    default: true
+
+  arsyacoin.command.refresh:
+    description: Pakai /c refresh
+    default: true
+
+  arsyacoin.command.check:
+    description: Pakai /c check <player>
+    default: false
+
+  arsyacoin.command.add:
+    description: Pakai /c addcoin <player> <amount>
+    default: false
+
+  arsyacoin.command.take:
+    description: Pakai /c takecoin <player> <amount>
+    default: false
+
+  arsyacoin.command.set:
+    description: Pakai /c setcoin <player> <amount>
+    default: false
+
+  arsyacoin.command.reload:
+    description: Pakai /c reload
+    default: false
+
+  arsyacoin.admin:
+    description: Full akses admin Arsya Premium Coin
+    default: false
