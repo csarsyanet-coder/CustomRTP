@@ -3,8 +3,11 @@ package dev.arsyadev.apcbridgehttp;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.command.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
+import org.bukkit.command.TabExecutor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,7 +24,7 @@ import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class ArsyaPremiumBridgeHttpPlugin extends JavaPlugin implements Listener, CommandExecutor, TabCompleter {
+public final class ArsyaPremiumBridgeHttpPlugin extends JavaPlugin implements Listener, TabExecutor {
 
     private final Map<UUID, Long> balanceCache = new ConcurrentHashMap<>();
     private final Gson gson = new Gson();
@@ -114,18 +117,20 @@ public final class ArsyaPremiumBridgeHttpPlugin extends JavaPlugin implements Li
                 }
 
                 String target;
+                boolean console = !(sender instanceof Player);
+
                 if (args.length >= 2) {
-                    if (!has(sender, "arsyacoin.command.check")) {
+                    if (!console && !has(sender, "arsyacoin.command.check")) {
                         sender.sendMessage("§cKamu tidak punya izin cek saldo player lain.");
                         return true;
                     }
                     target = args[1];
                 } else {
-                    if (!(sender instanceof Player player)) {
+                    if (console) {
                         sender.sendMessage("§cGunakan /c saldo <player> dari console.");
                         return true;
                     }
-                    target = player.getName();
+                    target = ((Player) sender).getName();
                 }
 
                 Bukkit.getScheduler().runTaskAsynchronously(this, () -> refreshBalance(target, true, sender));
@@ -137,6 +142,7 @@ public final class ArsyaPremiumBridgeHttpPlugin extends JavaPlugin implements Li
                     sender.sendMessage("§cKamu tidak punya izin.");
                     return true;
                 }
+
                 if (args.length < 2) {
                     sender.sendMessage("§eGunakan: /c check <player>");
                     return true;
@@ -154,18 +160,20 @@ public final class ArsyaPremiumBridgeHttpPlugin extends JavaPlugin implements Li
                 }
 
                 String target;
+                boolean console = !(sender instanceof Player);
+
                 if (args.length >= 2) {
-                    if (!has(sender, "arsyacoin.command.check")) {
+                    if (!console && !has(sender, "arsyacoin.command.check")) {
                         sender.sendMessage("§cKamu tidak punya izin refresh player lain.");
                         return true;
                     }
                     target = args[1];
                 } else {
-                    if (!(sender instanceof Player player)) {
+                    if (console) {
                         sender.sendMessage("§cGunakan /c refresh <player> dari console.");
                         return true;
                     }
-                    target = player.getName();
+                    target = ((Player) sender).getName();
                 }
 
                 Bukkit.getScheduler().runTaskAsynchronously(this, () -> refreshBalance(target, true, sender));
@@ -179,18 +187,20 @@ public final class ArsyaPremiumBridgeHttpPlugin extends JavaPlugin implements Li
                 }
 
                 String target;
+                boolean console = !(sender instanceof Player);
+
                 if (args.length >= 2) {
-                    if (!has(sender, "arsyacoin.command.check")) {
+                    if (!console && !has(sender, "arsyacoin.command.check")) {
                         sender.sendMessage("§cKamu tidak punya izin cek top up player lain.");
                         return true;
                     }
                     target = args[1];
                 } else {
-                    if (!(sender instanceof Player player)) {
+                    if (console) {
                         sender.sendMessage("§cGunakan /c cektopup <player> dari console.");
                         return true;
                     }
-                    target = player.getName();
+                    target = ((Player) sender).getName();
                 }
 
                 sender.sendMessage("§7Memeriksa top up dari proxy...");
@@ -203,6 +213,7 @@ public final class ArsyaPremiumBridgeHttpPlugin extends JavaPlugin implements Li
                     sender.sendMessage("§cKamu tidak punya izin.");
                     return true;
                 }
+
                 if (args.length < 3) {
                     sender.sendMessage("§eGunakan: /c addcoin <player> <amount>");
                     return true;
@@ -223,6 +234,7 @@ public final class ArsyaPremiumBridgeHttpPlugin extends JavaPlugin implements Li
                     sender.sendMessage("§cKamu tidak punya izin.");
                     return true;
                 }
+
                 if (args.length < 3) {
                     sender.sendMessage("§eGunakan: /c takecoin <player> <amount>");
                     return true;
@@ -243,6 +255,7 @@ public final class ArsyaPremiumBridgeHttpPlugin extends JavaPlugin implements Li
                     sender.sendMessage("§cKamu tidak punya izin.");
                     return true;
                 }
+
                 if (args.length < 3) {
                     sender.sendMessage("§eGunakan: /c setcoin <player> <amount>");
                     return true;
@@ -429,6 +442,9 @@ public final class ArsyaPremiumBridgeHttpPlugin extends JavaPlugin implements Li
     }
 
     private boolean has(CommandSender sender, String node) {
+        if (!(sender instanceof Player)) {
+            return true;
+        }
         return sender.hasPermission("arsyacoin.admin") || sender.hasPermission(node);
     }
 
